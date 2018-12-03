@@ -67,6 +67,7 @@
 		1825C24421B4D3FC004D4151 /* WeChatCCircle */ = {
 			isa = PBXGroup;
 			children = (
+				1825C26121B4F93D004D4151 /* Utility */,
 				1825C25721B4D7CF004D4151 /* Classes */,
 				1825C25F21B4F8DA004D4151 /* Supporting FIles */,
 			);
@@ -76,7 +77,6 @@
 		1825C25721B4D7CF004D4151 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				1825C26121B4F93D004D4151 /* Utility */,
 				1825C25C21B4E23F004D4151 /* Main */,
 				1825C25A21B4D84D004D4151 /* DisconverviewVC.swift */,
 			);
