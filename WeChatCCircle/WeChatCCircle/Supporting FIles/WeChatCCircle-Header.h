@@ -12,5 +12,9 @@
 
 #import "Utility.h"
 #import "UIView+Geometry.h"
+#import <MLLabel/MLTextAttachment.h>
+#import <MLLabel/MLLinkLabel.h>
+#import <MLLabel/MLExpressionManager.h>
+#import "NSAttributedString+MLExpression.h"
 
 #endif /* WeChatCCircle_Header_h */
