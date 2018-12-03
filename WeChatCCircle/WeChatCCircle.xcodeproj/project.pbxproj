@@ -12,6 +12,11 @@
 		1825C24B21B4D3FC004D4151 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1825C24921B4D3FC004D4151 /* Main.storyboard */; };
 		1825C24D21B4D401004D4151 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1825C24C21B4D401004D4151 /* Assets.xcassets */; };
 		1825C25021B4D401004D4151 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1825C24E21B4D401004D4151 /* LaunchScreen.storyboard */; };
+		1825C25B21B4D84D004D4151 /* DisconverviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1825C25A21B4D84D004D4151 /* DisconverviewVC.swift */; };
+		1825C25E21B4E265004D4151 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1825C25D21B4E265004D4151 /* MainViewController.swift */; };
+		1825C26921B4F95A004D4151 /* UIView+Geometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 1825C26421B4F95A004D4151 /* UIView+Geometry.m */; };
+		1825C26A21B4F95A004D4151 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1825C26521B4F95A004D4151 /* Utility.m */; };
+		1825C26D21B4FC5D004D4151 /* GlobalFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1825C26C21B4FC5D004D4151 /* GlobalFile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +27,14 @@
 		1825C24C21B4D401004D4151 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1825C24F21B4D401004D4151 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1825C25121B4D401004D4151 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1825C25A21B4D84D004D4151 /* DisconverviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconverviewVC.swift; sourceTree = "<group>"; };
+		1825C25D21B4E265004D4151 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		1825C26021B4F937004D4151 /* WeChatCCircle-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WeChatCCircle-Header.h"; sourceTree = "<group>"; };
+		1825C26221B4F95A004D4151 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
+		1825C26421B4F95A004D4151 /* UIView+Geometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Geometry.m"; sourceTree = "<group>"; };
+		1825C26521B4F95A004D4151 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
+		1825C26621B4F95A004D4151 /* UIView+Geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Geometry.h"; sourceTree = "<group>"; };
+		1825C26C21B4FC5D004D4151 /* GlobalFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalFile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +67,54 @@
 		1825C24421B4D3FC004D4151 /* WeChatCCircle */ = {
 			isa = PBXGroup;
 			children = (
+				1825C25721B4D7CF004D4151 /* Classes */,
+				1825C25F21B4F8DA004D4151 /* Supporting FIles */,
+			);
+			path = WeChatCCircle;
+			sourceTree = "<group>";
+		};
+		1825C25721B4D7CF004D4151 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				1825C26121B4F93D004D4151 /* Utility */,
+				1825C25C21B4E23F004D4151 /* Main */,
+				1825C25A21B4D84D004D4151 /* DisconverviewVC.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		1825C25C21B4E23F004D4151 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				1825C25D21B4E265004D4151 /* MainViewController.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		1825C25F21B4F8DA004D4151 /* Supporting FIles */ = {
+			isa = PBXGroup;
+			children = (
 				1825C24521B4D3FC004D4151 /* AppDelegate.swift */,
 				1825C24721B4D3FC004D4151 /* ViewController.swift */,
 				1825C24921B4D3FC004D4151 /* Main.storyboard */,
 				1825C24C21B4D401004D4151 /* Assets.xcassets */,
 				1825C24E21B4D401004D4151 /* LaunchScreen.storyboard */,
 				1825C25121B4D401004D4151 /* Info.plist */,
+				1825C26021B4F937004D4151 /* WeChatCCircle-Header.h */,
 			);
-			path = WeChatCCircle;
+			path = "Supporting FIles";
+			sourceTree = "<group>";
+		};
+		1825C26121B4F93D004D4151 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				1825C26C21B4FC5D004D4151 /* GlobalFile.swift */,
+				1825C26221B4F95A004D4151 /* Utility.h */,
+				1825C26521B4F95A004D4151 /* Utility.m */,
+				1825C26621B4F95A004D4151 /* UIView+Geometry.h */,
+				1825C26421B4F95A004D4151 /* UIView+Geometry.m */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,7 +189,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				1825C24821B4D3FC004D4151 /* ViewController.swift in Sources */,
+				1825C25B21B4D84D004D4151 /* DisconverviewVC.swift in Sources */,
 				1825C24621B4D3FC004D4151 /* AppDelegate.swift in Sources */,
+				1825C26A21B4F95A004D4151 /* Utility.m in Sources */,
+				1825C26921B4F95A004D4151 /* UIView+Geometry.m in Sources */,
+				1825C26D21B4FC5D004D4151 /* GlobalFile.swift in Sources */,
+				1825C25E21B4E265004D4151 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,15 +342,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DRHAQCZX3B;
-				INFOPLIST_FILE = WeChatCCircle/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/WeChatCCircle/Supporting FIles/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = sys.vguiren.con.WeChatCCircle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/WeChatCCircle/Supporting FIles/WeChatCCircle-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 			};
 			name = Debug;
 		};
@@ -302,15 +363,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DRHAQCZX3B;
-				INFOPLIST_FILE = WeChatCCircle/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/WeChatCCircle/Supporting FIles/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = sys.vguiren.con.WeChatCCircle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/WeChatCCircle/Supporting FIles/WeChatCCircle-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 			};
 			name = Release;
 		};
