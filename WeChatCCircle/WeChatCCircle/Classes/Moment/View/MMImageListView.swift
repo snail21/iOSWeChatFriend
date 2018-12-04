@@ -8,14 +8,27 @@
 
 import UIKit
 
+//### 图片显示集合
 class MMImageListView: UIView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-
+    
+    // 动态
+    var moment: Moment!
+    // 图片视图数组
+    var imageViewsAry: NSMutableArray!
+    // 预览视图
+    //    var previewView: mmImag
+    
+    
+    
 }
+
+
+// 点击小图block
+typealias tapSmallView = (_ imageView: UIImageView) ->()
+
+//### 单个小图显示视图
+class MMImageView: UIImageView {
+    
+    var block: tapSmallView!
+}
+
