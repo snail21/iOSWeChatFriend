@@ -25,6 +25,7 @@
 		1825C27E21B527A9004D4151 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1825C27D21B527A9004D4151 /* Comment.swift */; };
 		1876ED3021B61325009FE5B1 /* MMImagePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876ED2F21B61325009FE5B1 /* MMImagePreviewView.swift */; };
 		1876ED3221B66890009FE5B1 /* MMOpeateMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876ED3121B66890009FE5B1 /* MMOpeateMenuView.swift */; };
+		18E4758221B7D069009C288E /* MLLabelUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E4758121B7D069009C288E /* MLLabelUtil.swift */; };
 		5B749AA3B9A650DB8543961C /* libPods-WeChatCCircle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B70317ED18899BF19718270E /* libPods-WeChatCCircle.a */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +53,7 @@
 		1825C27D21B527A9004D4151 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		1876ED2F21B61325009FE5B1 /* MMImagePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MMImagePreviewView.swift; sourceTree = "<group>"; };
 		1876ED3121B66890009FE5B1 /* MMOpeateMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MMOpeateMenuView.swift; sourceTree = "<group>"; };
+		18E4758121B7D069009C288E /* MLLabelUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLLabelUtil.swift; sourceTree = "<group>"; };
 		538D55F1E02175FDB5F15AE9 /* Pods-WeChatCCircle.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChatCCircle.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeChatCCircle/Pods-WeChatCCircle.debug.xcconfig"; sourceTree = "<group>"; };
 		A6C2BF39FDB072B681846518 /* Pods-WeChatCCircle.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChatCCircle.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeChatCCircle/Pods-WeChatCCircle.release.xcconfig"; sourceTree = "<group>"; };
 		B70317ED18899BF19718270E /* libPods-WeChatCCircle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WeChatCCircle.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,6 +147,7 @@
 				1825C26621B4F95A004D4151 /* UIView+Geometry.h */,
 				1825C26421B4F95A004D4151 /* UIView+Geometry.m */,
 				1825C27521B512D5004D4151 /* MonentKit.swift */,
+				18E4758121B7D069009C288E /* MLLabelUtil.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				1825C24821B4D3FC004D4151 /* ViewController.swift in Sources */,
 				1825C25B21B4D84D004D4151 /* DisconverviewVC.swift in Sources */,
 				1825C27021B50A47004D4151 /* MonentViewVC.swift in Sources */,
+				18E4758221B7D069009C288E /* MLLabelUtil.swift in Sources */,
 				1825C24621B4D3FC004D4151 /* AppDelegate.swift in Sources */,
 				1825C26A21B4F95A004D4151 /* Utility.m in Sources */,
 				1825C27621B512D5004D4151 /* MonentKit.swift in Sources */,
