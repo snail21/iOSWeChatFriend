@@ -21,7 +21,7 @@ import UIKit
     // 查看全文/收起
     @objc optional func didSelectFullText(cell: MomentCell)
     // 选择评论
-    @objc optional func didSelectComment(cell: MomentCell)
+    @objc optional func didSelectComment(comment: Comment)
     // 点击高亮文字
     @objc optional func didClickLink(link: MLLink, linkText: String)
    
@@ -58,7 +58,153 @@ class MomentCell: UITableViewCell, MLLinkLabelDelegate {
         
         didSet {
             
+            headImageView?.image = UIImage(named: "moment_head")
+            nameLab?.text = moment.userName
             
+            // 正文
+            showAllBtn?.isHidden = true
+            linkLab?.isHidden = true
+            var bottom = (nameLab?.bottom)! + CGFloat(kPaddingValue)
+            var rowHeight:CGFloat = 0.0
+            
+            if moment.text?.count != 0 {
+                
+                linkLab?.isHidden = false
+                linkLab?.text = moment.text
+                
+                // 判断显示全文/ 收起
+                let attrStrSize = linkLab?.preferredSize(withMaxWidth: kTextWidth)
+                var labH: CGFloat = (attrStrSize?.height)!
+                
+                if labH > maxLimitHeight {
+                    
+                    if moment.isFullText != nil {
+                        
+                        labH = maxLimitHeight
+                        self.showAllBtn?.setTitle("全文", for: .normal)
+                    }
+                    else {
+                        self.showAllBtn?.setTitle("收起", for: .normal)
+                    }
+                    showAllBtn?.isHidden = false
+                }
+                linkLab?.frame = CGRect(x: (nameLab?.left)!, y: bottom, width: (attrStrSize?.width)!, height: labH)
+                showAllBtn?.frame = CGRect(x: (nameLab?.left)!, y: (linkLab?.bottom)! + CGFloat(kArrowHeight), width: CGFloat(kMoreLabWidth), height: CGFloat(kMoreLabHeight))
+                
+                if (showAllBtn?.isHidden)! {
+                    
+                    bottom = (linkLab?.bottom)! + CGFloat(kPaddingValue)
+                }
+                else {
+                    bottom = (showAllBtn?.bottom)! + CGFloat(kPaddingValue)
+                }
+            }
+            
+            // 图片
+            imageListView.moment = moment
+            if moment.fileCount! > 0 {
+                
+                imageListView.origin = CGPoint(x: (nameLab?.left)!, y: bottom)
+                bottom = imageListView.bottom + CGFloat(kPaddingValue)
+            }
+            
+            // 位置
+            locationLab?.frame = CGRect(x: (nameLab?.left)!, y: bottom, width: (nameLab?.width)!, height: CGFloat(kTimeLabH))
+            timeLab?.text = Utility.getDateFormat(byTimestamp: Int64(moment!.time!)!)
+            let textW = (timeLab!.text! as NSString).boundingRect(with: CGSize(width: 200, height: CGFloat(kTimeLabH)), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: timeLab?.font as Any], context: nil).size.width
+            
+            
+            if moment.location?.count != 0 {
+                
+                locationLab?.isHidden = false
+                locationLab?.text = moment.location
+                timeLab?.frame = CGRect(x: (nameLab?.left)!, y: (locationLab?.bottom)! + CGFloat(kPaddingValue), width: textW, height: CGFloat(kTimeLabH))
+            }
+            else {
+                locationLab?.isHidden = true
+                timeLab?.frame = CGRect(x: (nameLab?.left)!, y: bottom, width: textW, height: CGFloat(kTimeLabH))
+            }
+            
+            deleteBtn?.frame = CGRect(x: (timeLab?.right)! + 25.0, y: (timeLab?.top)!, width: 30.0, height: CGFloat(kTimeLabH))
+            bottom = (timeLab?.bottom)! + CGFloat(kPaddingValue)
+            
+            // 操作视图
+            menuView.frame = CGRect(x: kSCREEN_WIDTH - CGFloat(kOperateWidth) - 10.0, y: (timeLab?.top)! - CGFloat((kOperateHeight-kTimeLabH)/2), width: CGFloat(kOperateWidth), height: CGFloat(kOperateHeight))
+            menuView.show = false
+            
+            // 处理评论、赞
+            commentView.frame = .zero
+            bgImageView.frame = .zero
+            bgImageView.image = nil
+            let _ = commentView.subviews.map {
+                  $0.removeFromSuperview()
+            }
+            
+            // 处理赞
+            var top: CGFloat = 0.0
+            let width = kSCREEN_WIDTH - CGFloat(kRightMargin) - (nameLab?.left)!
+            
+            
+            if  moment.praiseNameList?.count != 0 {
+                
+                let likeLab = MLLabelUtil.kMLLinkLable()
+                likeLab.delegate = self
+                likeLab.attributedText = MLLabelUtil.kMLLinkLabelAttributedText(objc: moment.praiseNameList)
+                let attrStrSize = likeLab.preferredSize(withMaxWidth: CGFloat(kTextWidth))
+                likeLab.frame = CGRect(x: 5.0, y: 8.0, width: attrStrSize.width, height: attrStrSize.height)
+                commentView.addSubview(likeLab)
+                
+                // 分割线
+                let line = UIView(frame: CGRect(x: 0.0, y: likeLab.bottom + 7.0, width: width, height: 0.5))
+                line.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
+                commentView.addSubview(line)
+            
+                // 更新
+                top = attrStrSize.height + 15
+            }
+            
+            // 处理评论
+            let count = moment.commentList?.count
+            if count! > 0 {
+                
+                for i in 0..<count!  {
+                    let lab = CommentLabel(frame: CGRect(x: 0.0, y: top, width: width, height: 0.0))
+                    lab.comment = (moment.commentList![i] as! Comment)
+                    lab.didClickTextBlock = { (comments: Comment) in
+                        
+                        if self.delegate != nil {
+                            
+                            self.delegate?.didSelectComment!(comment:comments)
+                        }
+                    }
+                    
+                    lab.didClickLinkTextBlock = { (links, linkText) in
+                        
+                        if self.delegate != nil {
+                            
+                            self.delegate?.didClickLink!(link: links, linkText: linkText)
+                        }
+                    }
+                    commentView.addSubview(lab)
+                    
+                    //更新
+                    top += lab.height
+                }
+            }
+            
+            // 更新UI
+            if top > 0 {
+                
+                bgImageView.frame = CGRect(x: (nameLab?.left)!, y: bottom, width: width, height: top + CGFloat(kArrowHeight))
+                bgImageView.image = UIImage(named: "comment_bg")?.stretchableImage(withLeftCapWidth: 40, topCapHeight: 30)
+                contentView.frame = CGRect(x: (nameLab?.left)!, y: bottom + CGFloat(kArrowHeight), width: width, height: top)
+                rowHeight = commentView.bottom + CGFloat(kBlnk)
+            }
+            else {
+                rowHeight = (timeLab?.bottom)! + CGFloat(kBlnk)
+            }
+            
+            moment.rowHeight = rowHeight
         }
     }
     // 代理
