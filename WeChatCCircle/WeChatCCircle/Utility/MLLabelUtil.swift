@@ -24,7 +24,7 @@ class MLLabelUtil: NSObject {
         return linkLab
     }
     
-    class func kMLLinkLabelAttributedText(objc: Any) -> NSMutableAttributedString {
+    class func kMLLinkLabelAttributedText(objc: Any) -> NSMutableAttributedString? {
         
         var attributedText: NSMutableAttributedString?
         
@@ -46,7 +46,8 @@ class MLLabelUtil: NSObject {
             }
             
         }
-        else if objc is String {
+        
+        if objc is String {
             
             let content = objc as! String
             let likeStr: NSString = "[赞]" + content as NSString
@@ -67,7 +68,12 @@ class MLLabelUtil: NSObject {
             attributedText?.replaceCharacters(in: range, with: imageStr)
         }
         
-        return attributedText!
+//        if attributedText == nil {
+//
+//            attributedText = NSMutableAttributedString(string: "")
+//        }
+        
+        return attributedText
     }
     
 }

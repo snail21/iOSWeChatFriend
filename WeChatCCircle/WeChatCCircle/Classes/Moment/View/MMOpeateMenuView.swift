@@ -13,6 +13,27 @@ typealias commentMoment = () -> ()
 
 class MMOpeateMenuView: UIView {
 
+    
+    // 视图
+    lazy var menuView: UIView = {
+        
+        // 菜单视图容器
+        let view = UIView(frame: CGRect(x: kOperateWidth - kOperateBtnWidth, y: 0, width: kOperateWidth - kOperateBtnWidth, height: kOperateHeight))
+        view.backgroundColor = UIColor(red: 70.0/255.0, green: 74.0/255.0, blue: 75.0/255.0, alpha: 1.0)
+        view.layer.cornerRadius = 4
+        view.layer.masksToBounds = true
+        
+        return view
+       
+    }()
+    // 按钮
+    var menuBtn: UIButton!
+    
+    // 赞
+    var likeMomentBlock: likeMoment?
+    // 评论
+    var commentMomentBlock: commentMoment?
+    
     var show: Bool? {
         
         didSet {
@@ -30,15 +51,6 @@ class MMOpeateMenuView: UIView {
             self.menuView.left = CGFloat(menu_left)
         }
     }
-    // 视图
-    var menuView: UIView!
-    // 按钮
-    var menuBtn: UIButton!
-    
-    // 赞
-    var likeMomentBlock: likeMoment?
-    // 评论
-    var commentMomentBlock: commentMoment?
 
     
     override init(frame: CGRect) {
@@ -54,16 +66,12 @@ class MMOpeateMenuView: UIView {
     // 加载视图
     func addContentView() {
         
-        show = false
+        show = true
         
-        // 菜单视图容器
-        let view = UIView(frame: CGRect(x: kOperateWidth - kOperateBtnWidth, y: 0, width: kOperateWidth - kOperateBtnWidth, height: kOperateHeight))
-        view.backgroundColor = UIColor(red: 70.0/255.0, green: 74.0/255.0, blue: 75.0/255.0, alpha: 1.0)
-        view.layer.cornerRadius = 4
-        view.layer.masksToBounds = true
+       
         
         // 点赞
-        let btn = UUButton(frame: CGRect(x: 0, y: 0, width: Int(view.width / 2), height: kOperateHeight))
+        let btn = UUButton(frame: CGRect(x: 0, y: 0, width: Int(self.menuView.width / 2), height: kOperateHeight))
         btn.backgroundColor = UIColor.clear
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         btn.spacing = 3
@@ -71,12 +79,12 @@ class MMOpeateMenuView: UIView {
         btn.setTitleColor(UIColor.white, for: .normal)
         btn.setImage(UIImage(named: "moment_like"), for: .normal)
         btn.addTarget(self, action: #selector(likeClick), for: .touchUpInside)
-        view.addSubview(btn)
+        self.menuView.addSubview(btn)
         
         // 分割线
         let line = UIView(frame: CGRect(x: btn.right - 5.0, y: 8.0, width: 0.5, height: CGFloat(kOperateHeight - 16)))
         line.backgroundColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
-        view.addSubview(line)
+        self.menuView.addSubview(line)
         
         // 评论
         let pBtn = UUButton(frame: CGRect(x: line.right, y: 0.0, width: btn.width, height: CGFloat(kOperateHeight)))
@@ -87,9 +95,8 @@ class MMOpeateMenuView: UIView {
         pBtn.setTitleColor(UIColor.white, for: .normal)
         pBtn.setImage(UIImage(named: "moment_comment"), for: .normal)
         pBtn.addTarget(self, action: #selector(commentClick), for: .touchUpInside)
-        view.addSubview(pBtn)
+        self.menuView.addSubview(pBtn)
         
-        self.menuView = view
         self.addSubview(self.menuView)
         
         //菜单操作按钮

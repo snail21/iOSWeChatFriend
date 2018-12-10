@@ -67,8 +67,8 @@ class DisconverviewVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        
-        
+
+        let vc = MonentViewVC()
+        self.navigationController?.pushViewController(vc, animated: true)
     }    
 }

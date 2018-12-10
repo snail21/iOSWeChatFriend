@@ -180,6 +180,9 @@ class MMImageListView: UIView {
         UIView.animate(withDuration: 0.3, animations: {
             self.previewView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
             self.previewView.pageControl.isHidden = true
+            
+            let rect = scrollView.contentRect
+            scrollView.contentRect = rect
             scrollView.zoomScale = 1.0
         }) { (finished) in
             
@@ -206,6 +209,7 @@ class MMImageView: UIImageView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        addContentView()
     }
     
     required init?(coder aDecoder: NSCoder) {

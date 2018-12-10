@@ -48,7 +48,10 @@ class MomentCell: UITableViewCell, MLLinkLabelDelegate {
     // 图片
     var imageListView: MMImageListView!
     // 赞和评论视图
-    var commentView: UIView!
+    lazy var commentView: UIView = {
+        
+        return UIView()
+    }()
     // 赞和评论视图背景
     var bgImageView: UIImageView!
     // 操作视图
@@ -78,7 +81,7 @@ class MomentCell: UITableViewCell, MLLinkLabelDelegate {
                 
                 if labH > maxLimitHeight {
                     
-                    if moment.isFullText != nil {
+                    if moment.isFullText != true {
                         
                         labH = maxLimitHeight
                         self.showAllBtn?.setTitle("全文", for: .normal)
@@ -133,10 +136,10 @@ class MomentCell: UITableViewCell, MLLinkLabelDelegate {
             menuView.show = false
             
             // 处理评论、赞
-            commentView.frame = .zero
+            self.commentView.frame = .zero
             bgImageView.frame = .zero
             bgImageView.image = nil
-            let _ = commentView.subviews.map {
+            let _ = self.commentView.subviews.map {
                   $0.removeFromSuperview()
             }
             
@@ -152,22 +155,22 @@ class MomentCell: UITableViewCell, MLLinkLabelDelegate {
                 likeLab.attributedText = MLLabelUtil.kMLLinkLabelAttributedText(objc: moment.praiseNameList)
                 let attrStrSize = likeLab.preferredSize(withMaxWidth: CGFloat(kTextWidth))
                 likeLab.frame = CGRect(x: 5.0, y: 8.0, width: attrStrSize.width, height: attrStrSize.height)
-                commentView.addSubview(likeLab)
+                self.commentView.addSubview(likeLab)
                 
                 // 分割线
                 let line = UIView(frame: CGRect(x: 0.0, y: likeLab.bottom + 7.0, width: width, height: 0.5))
                 line.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
-                commentView.addSubview(line)
+                self.commentView.addSubview(line)
             
                 // 更新
                 top = attrStrSize.height + 15
             }
             
             // 处理评论
-            let count = moment.commentList?.count
-            if count! > 0 {
+            let count = moment.commentList?.count ?? 0
+            if count > 0 {
                 
-                for i in 0..<count!  {
+                for i in 0..<count  {
                     let lab = CommentLabel(frame: CGRect(x: 0.0, y: top, width: width, height: 0.0))
                     lab.comment = (moment.commentList![i] as! Comment)
                     lab.didClickTextBlock = { (comments: Comment) in
@@ -185,7 +188,7 @@ class MomentCell: UITableViewCell, MLLinkLabelDelegate {
                             self.delegate?.didClickLink!(link: links, linkText: linkText)
                         }
                     }
-                    commentView.addSubview(lab)
+                    self.commentView.addSubview(lab)
                     
                     //更新
                     top += lab.height
@@ -197,8 +200,8 @@ class MomentCell: UITableViewCell, MLLinkLabelDelegate {
                 
                 bgImageView.frame = CGRect(x: (nameLab?.left)!, y: bottom, width: width, height: top + CGFloat(kArrowHeight))
                 bgImageView.image = UIImage(named: "comment_bg")?.stretchableImage(withLeftCapWidth: 40, topCapHeight: 30)
-                contentView.frame = CGRect(x: (nameLab?.left)!, y: bottom + CGFloat(kArrowHeight), width: width, height: top)
-                rowHeight = commentView.bottom + CGFloat(kBlnk)
+                self.commentView.frame = CGRect(x: (nameLab?.left)!, y: bottom + CGFloat(kArrowHeight), width: width, height: top)
+                rowHeight = self.commentView.bottom + CGFloat(kBlnk)
             }
             else {
                 rowHeight = (timeLab?.bottom)! + CGFloat(kBlnk)
@@ -299,8 +302,8 @@ class MomentCell: UITableViewCell, MLLinkLabelDelegate {
         // 评论视图
         bgImageView = UIImageView()
         self.contentView.addSubview(bgImageView)
-        commentView = UIView()
-        self.contentView.addSubview(commentView)
+
+        self.contentView.addSubview(self.commentView)
         
         // 操作视图
         menuView = MMOpeateMenuView(frame: .zero)
@@ -340,7 +343,6 @@ class MomentCell: UITableViewCell, MLLinkLabelDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute:
             {
                 self.showAllBtn?.titleLabel?.backgroundColor = UIColor.clear
-                self.moment.isFullText = !self.moment.isFullText!
                 if self.delegate != nil {
                     self.delegate?.didSelectFullText!(cell: self)
                 }
