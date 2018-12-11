@@ -33,7 +33,7 @@ class Moment: NSObject {
     // 是否已经点赞
     var isPraise: Bool?
     // 评论集合
-    var commentList: NSArray?
+    var commentList: NSMutableArray?
     // Moment对应的cell高度
     var rowHeight: CGFloat?
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MonentViewVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MomentCellDelegate {
+class MonentViewVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MomentCellDelegate, UITextFieldDelegate {
 
     let cellIdentifer: NSString = "momentCell"
     
@@ -17,6 +17,13 @@ class MonentViewVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     var headerView: UIView!
     var coverImageView: UIImageView!
     var headImageView: UIImageView!
+    
+    var textField: UITextField!
+    var totalKeybordHeight: CGFloat!
+    var isDelete: Int!
+    
+    var selectIndexPath:IndexPath!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +40,8 @@ class MonentViewVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     // 加载视图
     func loadViewFrame() {
+        
+        self.isDelete = 0
         
         // 封面
         let imageView = UIImageView(frame: CGRect(x: 0, y: -WD_TopHeight, width: kSCREEN_WIDTH, height: 270))
@@ -76,6 +85,30 @@ class MonentViewVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         self.tableView.tableHeaderView = self.headerView
         self.tableView.register(MomentCell.self, forCellReuseIdentifier: cellIdentifer as String)
         self.view.addSubview(self.tableView)
+        
+        // 评论视图
+        self.textField = UITextField()
+        textField.returnKeyType = .done
+        textField.delegate = self
+        textField.backgroundColor = UIColor.white
+        textField.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.8).cgColor
+        textField.layer.borderWidth = 1
+        textField.keyboardAppearance = .default
+        
+        if  textField.isFirstResponder {
+            
+            textField.resignFirstResponder()
+            textField.becomeFirstResponder()
+        }
+        
+        textField.frame = CGRect(x: 0, y: kSCREEN_HEIGHT, width: kSCREEN_WIDTH, height: 40)
+        UIApplication.shared.keyWindow?.addSubview(textField)
+        
+        textField.becomeFirstResponder()
+        textField.resignFirstResponder()
+        
+        // 添加键盘弹出通知，获取高度
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardNotification(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
     // 加载数据
@@ -168,13 +201,19 @@ class MonentViewVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        let indexPath = self.tableView.indexPathForRow(at: CGPoint(x: scrollView.contentOffset.x, y: scrollView.contentOffset.y))
-        
-        if indexPath != nil {
-            
-                    let cell: MomentCell = self.tableView.cellForRow(at: indexPath!) as! MomentCell
-                    cell.menuView.show = false
-        }
+//        let indexPath = self.tableView.indexPathForRow(at: CGPoint(x: scrollView.contentOffset.x, y: scrollView.contentOffset.y))
+//
+//        if indexPath != nil {
+//
+//            if self.isDelete == 1 {
+//                self.isDelete = 0
+//            }
+//            else {
+//                let cell: MomentCell = self.tableView.cellForRow(at: indexPath!) as! MomentCell
+//                cell.menuView.show = false
+//            }
+//
+//        }
     }
     
     
@@ -236,6 +275,28 @@ class MonentViewVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     func didAddComment(cell: MomentCell) {
         
         print("评论")
+
+        cell.menuView.show = false
+        
+        textField.frame = CGRect(x: 0, y: kSCREEN_HEIGHT - 120, width: kSCREEN_WIDTH, height: 40)
+        textField.placeholder = "评论："
+        textField.becomeFirstResponder()
+        
+        let indexPath = self.tableView.indexPath(for: cell)
+        self.selectIndexPath = indexPath!
+        
+        let window = UIApplication.shared.keyWindow
+        let rect = cell.superview?.convert(cell.frame, to: window)
+        
+        let delta = (rect?.maxY)! - (kSCREEN_HEIGHT - totalKeybordHeight)
+        var offset = self.tableView.contentOffset
+        offset.y += delta
+        
+        if offset.y < 0 {
+            offset.y = 0
+        }
+        self.tableView.setContentOffset(offset, animated: true)
+        
     }
     
     // 查看全文、 收起
@@ -267,6 +328,7 @@ class MonentViewVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
         alert.addAction(UIAlertAction(title: "删除", style: .cancel, handler: { (action) in
             
+            self.isDelete = 1
             // 删除
             self.momentList.remove(cell.moment)
             self.tableView.reloadData()
@@ -286,4 +348,68 @@ class MonentViewVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
         print("点击a高亮文字： " + linkText )
     }
+    
+    //MARK: 视图操作
+    // textfiled Delegate
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if textField.text?.count != 0 {
+            
+            textField.resignFirstResponder()
+            
+            let moment: Moment = self.momentList[selectIndexPath.row] as! Moment
+            
+            let comment = Comment()
+            comment.userName = "啦啦啦"
+            comment.text = textField.text
+            comment.time = "1487649503"
+            comment.pk = moment.commentList?.count
+            moment.commentList?.add(comment)
+            
+            self.momentList.replaceObject(at: selectIndexPath.row, with: moment)
+            
+            self.tableView.reloadRows(at: [self.selectIndexPath], with: .none)
+            textField.text = ""
+            textField.placeholder = nil
+            
+            return true
+        }
+        
+        return false
+    }
+    
+    @objc func keyboardNotification(notification: NSNotification) {
+        
+        let dict = notification.userInfo
+        let rect = dict!["UIKeyboardFrameEndUserInfoKey"] as! CGRect
+        
+        var textFieldRect = CGRect(x: 0, y: rect.origin.y - 40, width: rect.size.width, height: 40)
+        if rect.origin.y == kSCREEN_HEIGHT {
+            
+            textFieldRect = rect
+        }
+        
+        UIView.animate(withDuration: 0.3) {
+            self.textField.frame = textFieldRect
+        }
+        
+        let height = rect.size.height + 40.0
+        if self.totalKeybordHeight != height {
+            
+            self.totalKeybordHeight = height
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        textField.resignFirstResponder()
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    
+        textField.resignFirstResponder()
+        textField.placeholder = nil
+    }
+    
 }
